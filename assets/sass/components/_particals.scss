@@ -1,0 +1,185 @@
+//colors
+$black: #000;
+$black-alt: #1c0502;
+$red-lite: #ed2b12;
+$red-medium: #630100;
+$red-dark: #450100;
+
+//urls
+$bg-main: url("http://www3.pictures.zimbio.com/mp/0m96xVAgkqSx.jpg");
+
+body {
+	background: $black;
+}
+
+.container {
+	background-image: $bg-main;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+	margin: 0;
+	min-height: 600px;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	width: 100%;
+
+	canvas {
+		@include position(absolute, 0 null null 0);
+		height: 100%;
+		overflow: hidden;
+		width: 100%;
+	}
+}
+
+.st {
+	animation: fadeIn 4s linear;
+	color: $black-alt;
+	font-family: ITC Benguiat W01;
+	font-size: 8rem;
+	font-weight: 800;
+	left: 50%;
+	letter-spacing: -2px;
+	position: absolute;
+	text-align: center;
+	text-shadow: -.05rem -.05rem 1px $red-lite, .05rem -.05rem 1px $red-lite, -.05rem .05rem 1px $red-lite, .05rem .05rem 1px $red-lite, 0 0 15px $red-medium, 0 0 20px $red-dark;
+	text-transform: uppercase;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 30;
+
+	p {
+		display: inline-block;
+		margin: 0;
+	}
+
+	.letter {
+		@for $i from 0 through 14 {
+			&:nth-of-type(#{$i}) {
+				animation: flicker 4s linear 1s;
+			}
+		}
+	}
+
+	&-stranger {
+		position: relative;
+
+		&::before {
+			@include position(absolute, 0 0 null 0);
+			box-shadow: -0.05rem -0.05rem 2px $red-lite, 0.05rem -0.05rem 2px $red-lite, -0.05rem 0.05rem 2px $red-lite, 0.05rem 0.05rem 2px $red-lite;
+			content: '';
+			display: block;
+			height: 5px;
+			width: 100%;
+		}
+
+
+		&-s {
+			font-size: 10.5rem;
+			letter-spacing: -8px;
+		}
+
+		&-t {
+			letter-spacing: 0;
+		}
+
+		&-n {
+			letter-spacing: -5px;
+		}
+
+		&-g {
+			letter-spacing: 0;
+		}
+
+		&-r-2 {
+			font-size: 10.5rem;
+			right: .2rem;
+		}
+	}
+
+	&-things {
+		position: relative;
+
+		&::before,
+		&::after {
+			@include position(absolute, 40% null null null);
+			box-shadow: -0.05rem -0.05rem 2px $red-lite, 0.05rem -0.05rem 2px $red-lite, -0.05rem 0.05rem 2px $red-lite, 0.05rem 0.05rem 2px $red-lite;
+			content: '';
+			display: block;
+			height: 5px;
+			width: 100px;
+			margin-top: -(5px / 2);
+		}
+
+		&::before {
+			margin-right: -(100px / 2);
+			right: 104%;
+		}
+
+		&::after {
+			left: 104%;
+			margin-left: -(100px / 2);
+		}
+
+		&-t {
+			font-size: 104%;
+			letter-spacing: 2px;
+		}
+
+		&-n {
+			letter-spacing: -5px;
+		}
+
+		&-g {
+			letter-spacing: -3px;
+		}
+	}
+}
+
+.st {
+	&-bound {
+		// box-shadow: -.05rem -.05rem 2px $red-lite, .05rem -.05rem 2px $red-lite, -.05rem .05rem 2px $red-lite, .05rem .05rem 2px $red-lite;
+		// height: 5px;
+
+		// &-right {
+		// 	float: right;
+		// 	left: .3rem;
+		// 	position: relative;
+		// 	width: 103px;
+		// }
+
+		&-left {
+			float: left;
+			left: 5px;
+			position: relative;
+			width: 99px;
+		}
+
+		&-full {
+			margin: auto;
+			margin-bottom: -1.2rem;
+			margin-left: 5px;
+			max-width: 612px;
+			width: 100%;
+		}
+
+		&-mini {
+			margin-top: .5rem;
+		}
+	}
+
+	&-bottom {
+		clear: both;
+		left: .6rem;
+		letter-spacing: 2px;
+		position: relative;
+		top: -3.75rem;
+	}
+
+	&-drop {
+		line-height: 0;
+		position: relative;
+		top: 1.55rem;
+	}
+}

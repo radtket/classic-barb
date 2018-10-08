@@ -135,132 +135,18 @@ gulp.task('build:css', () => {
 });
 
 // js
-gulp.task('build:js', () => {
-	// edit these
-	const globals = {
-		bows: 'bows',
-		jquery: 'jQuery',
-		modernizr: 'Modernizr',
-	};
+gulp.task('build:js', function() {
+	const { plumber, sourcemaps, babel, uglify, rename } = gulpPlugins;
 
-	// Note: do not edit these lines
-	const del = require('del');
-	const es2015 = require('rollup-plugin-buble');
-	const prettyBytes = require('pretty-bytes');
-	const rollup = require('rollup');
-	const uglify = require('rollup-plugin-uglify');
-	const vinylPaths = require('vinyl-paths');
-	const { util } = gulpPlugins;
-	const { colors: chalk } = util;
 
-	const log = (() => {
-		const cache = Object.create(null);
-
-		return (fileName, msg) => {
-			if (!(fileName in cache)) {
-				cache[fileName] = Object.create(null);
-			}
-
-			if (msg in cache[fileName]) {
-				return;
-			}
-
-			const title = `${chalk.cyan('rollup')} `;
-
-			util.log(`${title + chalk.blue(fileName)} ${msg}`);
-
-			cache[fileName][msg] = true;
-		};
-	})();
-
-	const getPaths = path => {
-		const fileName = path.replace(`${project.js}/`, '').slice(0, -3);
-		const dest = `${project.dist}/${fileName}.js`;
-		const minDest = `${project.dist}/${fileName}.min.js`;
-		const moduleName = fileName[0].toUpperCase() + fileName.slice(1);
-
-		moduleName
-			.replace(/(-|_|\.|\s)+(.)?/g, (match, separator, chr) => (chr ? chr.toUpperCase() : ''))
-			.replace(/(^|\/)([A-Z])/g, match => match.toLowerCase());
-
-		return { path, fileName, dest, minDest, moduleName };
-	};
-
-	const writeFiles = (bundle, path, fileName, moduleName, dest) => {
-		const opts = {
-			globals,
-			sourceMap: true,
-			moduleName,
-			banner,
-			exports: 'named',
-			format: 'umd',
-			dest,
-		};
-
-		const result = bundle.generate(opts);
-		let size = Buffer.byteLength(result.code, 'utf8');
-
-		size = prettyBytes(size);
-		size = chalk.magenta(size);
-
-		log(fileName, chalk.magenta(size));
-
-		return bundle.write(opts);
-	};
-
-	// delete dist files
-	del.sync([`${project.dist}/**/*.js`]);
-
-	// read js files
-	return gulp.src([`${project.js}/**/*.js`, '!_*.js'], { read: false }).pipe(
-		vinylPaths(path => {
-			const fileName = path.replace(`${project.js}/`, '');
-
-			// skip if file has a _ as the first character
-			if ('_' === fileName[0]) {
-				return Promise.resolve();
-			}
-
-			return new Promise((resolve, reject) => {
-				const { fileName, dest, minDest, moduleName } = getPaths(path);
-				// compile original file
-
-				return (
-					rollup
-						.rollup({
-							entry: path,
-							external: Object.keys(globals),
-							onwarn: msg => log(`${fileName}.js`, msg),
-							plugins: [es2015()],
-						})
-						// write original file
-						.then(bundle => writeFiles(bundle, path, `${fileName}.js`, moduleName, dest))
-
-						// compile minified file
-						.then(() =>
-							rollup.rollup({
-								entry: path,
-								external: Object.keys(globals),
-								onwarn: msg => log(`${fileName}.min.js`, msg),
-								plugins: [es2015(), uglify()],
-							})
-						)
-						// write minified file
-						.then(bundle => writeFiles(bundle, path, `${fileName}.min.js`, moduleName, minDest))
-
-						.then(() => {
-							const sync = () => (browserSync ? browserSync.reload() : util.noop());
-
-							sync();
-						})
-
-						// handle promise
-						.then(resolve)
-						.catch(reject)
-				);
-			}).catch(err => console.log(err));
-		})
-	);
+return gulp.src(`${project.js}/**/*.js`)
+			.pipe(plumber())
+			.pipe(sourcemaps.init())
+			.pipe(gulp.dest(`${project.dist}`))
+			.pipe(rename('scripts.min.js'))
+			.pipe(uglify())
+			.pipe(sourcemaps.write('.'))
+			.pipe(gulp.dest(`${project.dist}`));
 });
 
 // vendor
