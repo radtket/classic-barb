@@ -1,0 +1,22 @@
+linters:
+  SelectorFormat:
+    convention: hyphenated_BEM
+  NestingDepth:
+    max_depth: 8
+  SelectorDepth:
+    max_depth: 8
+  Indentation:
+    character: tab
+    width: 1
+  QualifyingElement:
+    enabled: false
+  IdSelector:
+    enabled: false
+  ImportantRule:
+    enabled: false
+  StringQuotes:
+    style: double_quotes
+  Comment:
+    enabled: false
+  HexLength:
+    style: long
