@@ -1,4 +1,10 @@
 {
+  "_args": [
+    [
+      "bows@1.6.0",
+      "/Users/taylorradtke/Desktop/StrangerThings"
+    ]
+  ],
   "_from": "bows@1.6.0",
   "_id": "bows@1.6.0",
   "_inBundle": false,
@@ -19,8 +25,7 @@
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/bows/-/bows-1.6.0.tgz",
-  "_shasum": "0c7d65c9682ce8adedac50d709cc498c9628da05",
-  "_spec": "bows@1.6.0",
+  "_spec": "1.6.0",
   "_where": "/Users/taylorradtke/Desktop/StrangerThings",
   "author": {
     "name": "Philip Roberts"
@@ -28,11 +33,9 @@
   "bugs": {
     "url": "https://github.com/latentflip/bows/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "andlog": "^1.0.0"
   },
-  "deprecated": false,
   "description": "Rainbowed console logs for chrome, opera and firefox in development.",
   "devDependencies": {
     "browserify": "^5.10.0",

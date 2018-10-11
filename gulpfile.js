@@ -48,200 +48,201 @@ gulp.task('build', sequence('build:vendor', ['build:img', 'build:css', 'build:js
 
 // img
 gulp.task('build:img', () => {
-	const { imagemin, size } = gulpPlugins;
+  const { imagemin, size } = gulpPlugins;
 
-
-return gulp
-		.src(`${project.img}/**/*.{png,jpg,jpeg,gif,svg}`)
-		.pipe(imagemin())
-		.pipe(
-			size({
-				showFiles: true,
-				title: 'imagemin',
-			})
-		)
-		.pipe(gulp.dest(`${project.img}`));
+  return gulp
+    .src(`${project.img}/**/*.{png,jpg,jpeg,gif,svg}`)
+    .pipe(imagemin())
+    .pipe(
+      size({
+        showFiles: true,
+        title: 'imagemin',
+      })
+    )
+    .pipe(gulp.dest(`${project.img}`));
 });
 
 // css
 gulp.task('build:css', () => {
-	const {
-		autoprefixer,
-		csso,
-		filter,
-		header,
-		mergeMediaQueries,
-		notify,
-		plumber,
-		rename,
-		sass,
-		sassGlob,
-		size,
-		sourcemaps,
-		util,
-	} = gulpPlugins;
-	const filterCSS = filter(['**/*.css'], { restore: true });
-	const sync = () => (browserSync ? browserSync.stream({ match: '**/*.css' }) : util.noop());
+  const {
+    autoprefixer,
+    csso,
+    filter,
+    header,
+    mergeMediaQueries,
+    notify,
+    plumber,
+    rename,
+    sass,
+    sassGlob,
+    size,
+    sourcemaps,
+    util,
+  } = gulpPlugins;
+  const filterCSS = filter(['**/*.css'], { restore: true });
+  const sync = () => (browserSync ? browserSync.stream({ match: '**/*.css' }) : util.noop());
 
-	return (
-		gulp
-			.src([`${project.sass}/**/*.scss`, '!_*.scss'])
-			.pipe(plumber())
-			.pipe(sourcemaps.init())
-			.pipe(sassGlob())
-			.pipe(
-				sass({
-					outputStyle: 'expanded',
-				}).on('error', sass.logError)
-			)
-			.pipe(
-				autoprefixer({
-					browsers: ['last 2 versions', 'ie 11'],
-				})
-			)
-			.pipe(header(banner))
-			.pipe(
-				size({
-					showFiles: true,
-					title: 'sass',
-				})
-			)
-			.pipe(sourcemaps.write('.'))
-			.on('error', util.log)
-			.pipe(gulp.dest(project.dist))
-			.pipe(sync())
+  return (
+    gulp
+      .src([`${project.sass}/**/*.scss`, '!_*.scss'])
+      .pipe(plumber())
+      .pipe(sourcemaps.init())
+      .pipe(sassGlob())
+      .pipe(
+        sass({
+          outputStyle: 'expanded',
+        }).on('error', sass.logError)
+      )
+      .pipe(
+        autoprefixer({
+          browsers: ['last 2 versions', 'ie 11'],
+        })
+      )
+      .pipe(header(banner))
+      .pipe(
+        size({
+          showFiles: true,
+          title: 'sass',
+        })
+      )
+      .pipe(sourcemaps.write('.'))
+      .on('error', util.log)
+      .pipe(gulp.dest(project.dist))
+      .pipe(sync())
 
-			// minified version
-			.pipe(filterCSS)
-			.pipe(mergeMediaQueries({ log: true }))
-			.pipe(rename({ suffix: '.min' }))
-			// .pipe(csso())
-			.on('error', util.log)
-			.pipe(
-				size({
-					showFiles: true,
-					title: 'sass',
-				})
-			)
-			.pipe(sourcemaps.write('.'))
-			.on('error', util.log)
-			.pipe(filterCSS.restore)
+      // minified version
+      .pipe(filterCSS)
+      .pipe(mergeMediaQueries({ log: true }))
+      .pipe(rename({ suffix: '.min' }))
+      // .pipe(csso())
+      .on('error', util.log)
+      .pipe(
+        size({
+          showFiles: true,
+          title: 'sass',
+        })
+      )
+      .pipe(sourcemaps.write('.'))
+      .on('error', util.log)
+      .pipe(filterCSS.restore)
 
-			// create both files
-			.pipe(gulp.dest(project.dist))
-			.pipe(sync())
-			.pipe(notify({ message: 'TASK: "styles" Completed! 💯', onLast: true }))
-	);
+      // create both files
+      .pipe(gulp.dest(project.dist))
+      .pipe(sync())
+      .pipe(notify({ message: 'TASK: "styles" Completed! 💯', onLast: true }))
+  );
 });
 
 // js
-gulp.task('build:js', function() {
-	const { plumber, sourcemaps, babel, uglify, rename } = gulpPlugins;
+gulp.task('build:js', () => {
+  const { plumber, sourcemaps, babel, rename } = gulpPlugins;
 
-
-return gulp.src(`${project.js}/**/*.js`)
-			.pipe(plumber())
-			.pipe(sourcemaps.init())
-			.pipe(gulp.dest(`${project.dist}`))
-			.pipe(rename('scripts.min.js'))
-			.pipe(uglify())
-			.pipe(sourcemaps.write('.'))
-			.pipe(gulp.dest(`${project.dist}`));
+  return gulp
+    .src(`${project.js}/**/*.js`)
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(gulp.dest(`${project.dist}`))
+    .pipe(rename('scripts.min.js'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(`${project.dist}`));
 });
 
 // vendor
 gulp.task('build:vendor', ['build:vendor:copyFromNpm', 'build:vendor:modernizr']);
 
 gulp.task('build:vendor:copyFromNpm', () => {
-	const { size } = gulpPlugins;
-	const npmFiles = Object.keys(pkg.dependencies).map(name => `${project.node}/${name}/**/*`);
+  const { size } = gulpPlugins;
+  const npmFiles = Object.keys(pkg.dependencies).map(name => `${project.node}/${name}/**/*`);
 
-	return gulp
-		.src(npmFiles, { base: project.node })
-		.pipe(size({ title: 'vendor' }))
-		.pipe(gulp.dest(project.vendor));
+  return gulp
+    .src(npmFiles, { base: project.node })
+    .pipe(size({ title: 'vendor' }))
+    .pipe(gulp.dest(project.vendor));
 });
 
 gulp.task('build:vendor:modernizr', () => {
-	const { babel, header, modernizr, rename, sourcemaps, uglify } = gulpPlugins;
+  const { babel, header, modernizr, rename, sourcemaps, uglify } = gulpPlugins;
 
-	return (
-		gulp
-			.src([`${project.sass}/**/*.scss`, `${project.js}/**/*.js`])
-			.pipe(
-				modernizr({
-					options: ['setClasses', 'addTest', 'html5printshiv', 'testProp', 'fnBind'],
-				})
-			)
-			.pipe(gulp.dest(`${project.vendor}/modernizr`))
+  return (
+    gulp
+      .src([`${project.sass}/**/*.scss`, `${project.js}/**/*.js`])
+      .pipe(
+        modernizr({
+          options: ['setClasses', 'addTest', 'html5printshiv', 'testProp', 'fnBind'],
+        })
+      )
+      .pipe(gulp.dest(`${project.vendor}/modernizr`))
 
-			// minified version
-			.pipe(sourcemaps.init())
-			.pipe(rename({ suffix: '.min' }))
-			.pipe(babel({
-				presets: ['env']
-			}))
-			.pipe(
-				uglify({
-					preserveComments: 'license',
-				})
-			)
-			.pipe(header(banner))
-			.pipe(sourcemaps.write('.'))
-			.pipe(gulp.dest(`${project.vendor}/modernizr`))
-	);
+      // minified version
+      .pipe(sourcemaps.init())
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(
+        babel({
+          presets: ['env'],
+        })
+      )
+      .pipe(
+        uglify({
+          preserveComments: 'license',
+        })
+      )
+      .pipe(header(banner))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest(`${project.vendor}/modernizr`))
+  );
 });
 
 gulp.task('translate', () => {
-	const { notify, sort, wpPot } = gulpPlugins;
+  const { notify, sort, wpPot } = gulpPlugins;
 
-	gulp
-		.src(`${project.root}/**/*.php`)
-		.pipe(sort())
-		.pipe(
-			wpPot({
-				domain: textDomain,
-				package: packageName,
-				bugReport,
-				lastTranslator,
-				team,
-			})
-		)
-		.pipe(gulp.dest(`${translationDestination}/${translationFile}`))
-		.pipe(notify({ message: 'TASK: "translate" Completed! 💯', onLast: true }));
+  gulp
+    .src(`${project.root}/**/*.php`)
+    .pipe(sort())
+    .pipe(
+      wpPot({
+        domain: textDomain,
+        package: packageName,
+        bugReport,
+        lastTranslator,
+        team,
+      })
+    )
+    .pipe(gulp.dest(`${translationDestination}/${translationFile}`))
+    .pipe(notify({ message: 'TASK: "translate" Completed! 💯', onLast: true }));
 });
 
-
 gulp.task('html', () => {
-	const { htmlmin } = gulpPlugins;
+  const { htmlmin } = gulpPlugins;
 
-	gulp
-		.src(`${project.root}/*.html`)
-    .pipe(htmlmin({
-      collapseWhitespace: true,
-      removeComments: true
-    }))
+  gulp
+    .src(`${project.root}/*.html`)
+    .pipe(
+      htmlmin({
+        collapseWhitespace: true,
+        removeComments: true,
+      })
+    )
     .pipe(gulp.dest(`${project.dist}`));
 });
 
 // watch
 gulp.task('watch', () => {
-	// browserSync.init({
-	// 	// Project URL.
-	// 	proxy: 'http://localhost:8888/',
-	// 	open: true,
-	// 	// Use a specific port (instead of the one auto-detected by Browsersync).
-	// 	// port: 7000,
-	// });
+  // browserSync.init({
+  // 	// Project URL.
+  // 	proxy: 'http://localhost:8888/',
+  // 	open: true,
+  // 	// Use a specific port (instead of the one auto-detected by Browsersync).
+  // 	// port: 7000,
+  // });
 
-	browserSync.init({
-		server: {
-			baseDir: `${project.root}/docs`
-		},
-	});
-	gulp.watch(`${project.root}/*.html`, ['html', reload]);
-	gulp.watch(`${project.sass}/**/*.scss`, ['build:css']);
-	gulp.watch(`${project.js}/**/*.js`, ['build:js', reload]);
-	gulp.watch(`${project.root}/**/*.php`).on('change', reload);
-	gulp.watch(`${project.img}/**/*.{png,jpg,jpeg,gif,svg}`).on('change', reload);
+  browserSync.init({
+    server: {
+      baseDir: `${project.root}/docs`,
+    },
+  });
+  gulp.watch(`${project.root}/*.html`, ['html', reload]);
+  gulp.watch(`${project.sass}/**/*.scss`, ['build:css']);
+  gulp.watch(`${project.js}/**/*.js`, ['build:js', reload]);
+  gulp.watch(`${project.root}/**/*.php`).on('change', reload);
+  gulp.watch(`${project.img}/**/*.{png,jpg,jpeg,gif,svg}`).on('change', reload);
 });
