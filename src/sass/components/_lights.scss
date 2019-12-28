@@ -1,0 +1,116 @@
+//colors
+$color-black: #000;
+$color-black-alt: #1c0502;
+$color-red-l: #ed2b12;
+$color-red-m: #630100;
+$color-red-d: #450100;
+$white: #fff;
+
+//urls
+$url-0: url(https://raw.githubusercontent.com/RominaMartin/DressItUp/master/images/svgBackground.png);
+$url-1: url(https://cdn.rawgit.com/RominaMartin/StrangerLights/b598ea7b/SomethingStrange.ttf);
+$url-2: url(https://cdn.rawgit.com/RominaMartin/StrangerLights/b598ea7b/BenguiatBold.ttf);
+
+@font-face {
+	font-family: SomethingStrange;
+	src: $url-1;
+}
+
+@font-face {
+	font-family: StrangerThings;
+	src: $url-2;
+}
+
+$input-background: rgba(57, 63, 84, .8);
+$input-text-inactive: #7881a1;
+$input-text-active: #bfd2ff;
+
+#text_inputs {
+	background: $input-background;
+	border-radius: 2px;
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+	max-width: 400px;
+	padding: 16px 24px;
+	position: relative;
+	width: 100%;
+
+	&::after {
+		animation: gradient 3s linear infinite;
+		background: linear-gradient(to right, #b294ff, #57e6e6, #feffb8, #57e6e6, #b294ff, #57e6e6);
+		background-position: 0% 0%;
+		background-size: 500% auto;
+		border-bottom-left-radius: 2px;
+		border-bottom-right-radius: 2px;
+		bottom: 0;
+		content: "";
+		height: 2px;
+		left: 0;
+		position: absolute;
+		right: 0;
+		z-index: 999;
+	}
+
+	&.is-focus {
+		button {
+			> svg {
+				// animation: rotate-90-cw .75s cubic-bezier(.250, .460, .450, .940) both;
+				// fill: $input-text-active;
+				// animation:  slide-out-right-and-spin 2s cubic-bezier(.550, .085, .680, .530) both;
+				transform: rotate(45deg);
+			}
+		}
+	}
+
+	input {
+		background: transparent;
+		border-style: none;
+		color: $input-text-active;
+		flex-grow: 1;
+		font-size: 18px;
+		line-height: 24px;
+		outline: none;
+		vertical-align: middle;
+
+		&::-webkit-input-placeholder {
+			color: $input-text-inactive;
+		}
+	}
+
+	button {
+		-webkit-appearance: button;
+		background: none;
+		border: 0;
+		height: (58px / 2);
+		line-height: 1;
+		margin: 0;
+		outline: none;
+		padding: 0;
+		transition: color .25s;
+		vertical-align: middle;
+
+		&.send-it {
+			> svg {
+				fill: $input-text-active;
+				animation:  slide-out-right .5s cubic-bezier(.550, .085, .680, .530) both;
+			}
+		}
+
+		> svg {
+			animation: flicker-in-2 2s linear both;
+			fill: $input-text-inactive;
+			height: (58px / 2);
+			transform: rotate(0deg);
+			transition: transform .75s cubic-bezier(.250, .460, .450, .940);
+
+			&:hover {
+				fill: $input-text-active;
+			}
+		}
+	}
+}
+
+// svg {
+// 	animation: rotate-90-cw .4s cubic-bezier(.250, .460, .450, .940) both, slide-out-right .5s cubic-bezier(.550, .085, .680, .530) both;
+// }

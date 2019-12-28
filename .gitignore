@@ -2,7 +2,7 @@
 app/css/style.css
 app/css/print.css
 package-lock.json
-
+.cache
 
 # Created by https://www.gitignore.io/api/node,osx,windows
 

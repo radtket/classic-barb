@@ -1,0 +1,114 @@
+//colors
+$black: #000;
+
+//urls
+$url-0: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782962/posterback_vrnptz.png);
+$url-1: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782960/eleven_eyeca0.png);
+$url-2: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782959/eyelids_s12six.png);
+$url-3: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782959/arm_iwjvzv.png);
+$url-4: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782959/hand_kuy5dz.png);
+$url-5: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782958/eye-problems_y1f6ne.png);
+$url-6: url(https://res.cloudinary.com/dxscrtoxq/image/upload/v1468782958/blood_rnujxa.png);
+
+// html {
+// 	height: 100%;
+// }
+
+// body {
+// 	align-items: center;
+// 	background-color: $black;
+// 	display: flex;
+// 	height: 100%;
+// 	justify-content: center;
+// 	overflow: hidden;
+// }
+
+#world {
+	@include size(100%);
+	@include position(absolute, 0 null null 0);
+	animation: upside-rain 10s linear infinite;
+	filter: brightness(1000%);
+	opacity: 0;
+	z-index: 7;
+}
+
+.grain {
+	@include size(100%);
+	@include position(absolute, 0 null null 0);
+	z-index: 9;
+}
+
+.hawkins {
+	@include size(700px, 500px);
+	align-items: center;
+	animation: upside-down 10s linear infinite;
+	background-image: $url-0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 650px;
+	display: flex;
+	justify-content: center;
+}
+
+.el {
+	@include size(500px);
+	animation: el-shake 5s linear infinite;
+	background-image: $url-1;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 400px;
+	margin-left: 65px;
+	position: relative;
+}
+
+.part {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	position: absolute;
+}
+
+.eyelids {
+	@include size(117px, 100px);
+	animation: blink 6.5s ease-out infinite;
+	background-image: $url-2;
+	left: 119px;
+	opacity: 0;
+	top: 163px;
+	z-index: 5;
+}
+
+.arm {
+	@include size(150px, 300px);
+	animation: arm-shake 5s ease-out infinite;
+	background-image: $url-3;
+	left: 233px;
+	top: 232px;
+}
+
+.hand {
+	@include size(282px, 300px);
+	animation: hand-shake 8s ease-out infinite;
+	background-image: $url-4;
+	left: 181px;
+	top: 197px;
+}
+
+.eye-problems {
+	@include size(142px, 300px);
+	animation: side-effects 10s ease-out infinite;
+	background-image: $url-5;
+	left: 107px;
+	opacity: .7;
+	top: 72px;
+}
+
+.blood {
+	@include size(20px, 100px);
+	animation: drip 10s ease-out infinite;
+	background-image: $url-6;
+	left: 180px;
+	opacity: 1;
+	top: 225px;
+}
+

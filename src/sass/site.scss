@@ -1,0 +1,103 @@
+@import "../../node_modules/bourbon/core/bourbon";
+@import "../../node_modules/bourbon-neat/app/assets/stylesheets/neat";
+@import "./base/_variables";
+@import "./base/animations";
+@import "./base/buttons";
+@import "./base/forms";
+@import "./base/layout";
+@import "./base/lists";
+@import "./base/media";
+@import "./base/tables";
+@import "./base/typography";
+
+@import "./components/hawkins";
+@import "./components/lights";
+@import "./components/parallax";
+@import "./components/particals";
+
+.mobile .home-section {
+	background-attachment: scroll;
+}
+
+.home-section {
+	background-attachment: fixed;
+	background-image: url("../img/et.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: block;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+	@media only screen and (max-width: 1024px) {
+		background-attachment: scroll;
+	}
+}
+
+.home-content {
+	display: table;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	width: 100%;
+}
+
+.home-text {
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.fixed-height-small {
+	box-sizing: border-box;
+	min-height: 600px;
+
+	@media only screen and (max-width: 480px) {
+		min-height: 300px;
+	}
+}
+
+.the-upside-down {
+	background-image: linear-gradient(
+		to top,
+		hsl(204, 80%, 15%) 35%,
+		hsl(192, 84%, 32%) 42.5%,
+		hsl(193, 71%, 41%) 50%,
+		hsl(189, 95%, 56%) 100%
+	);
+	overflow: hidden;
+	position: relative;
+
+	canvas {
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	svg {
+		bottom: 0;
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		path {
+			animation: dash 5s linear forwards;
+			fill: none;
+			stroke: #ff0000;
+			stroke-dasharray: 1000;
+			stroke-dashoffset: 1000;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke-miterlimit: 10;
+			stroke-width: 2;
+		}
+	}
+}
+
+@keyframes dash {
+	to {
+		stroke-dashoffset: 0;
+	}
+}

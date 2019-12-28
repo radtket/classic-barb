@@ -1,0 +1,70 @@
+html {
+	// background-color: $viewport-background-color;
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+.container {
+	@include outer-container;
+	@include padding(null $small-spacing);
+}
+
+.page-section,
+.small-section {
+	@include padding(null 0);
+	background-attachment: scroll;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-sizing: border-box;
+	display: block;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+	@media only screen and (min-width: 1024px) {
+		background-attachment: fixed;
+	}
+}
+
+.page-section {
+	@include padding(60px null);
+
+	@media only screen and (min-width: 480px) {
+		@include padding(80px null);
+	}
+
+	@media only screen and (min-width: 768px) {
+		@include padding(120px null);
+	}
+
+	@media only screen and (min-width: 1024px) {
+		@include padding(140px null);
+	}
+}
+
+.small-section {
+	@include padding(30px null);
+
+	@media only screen and (min-width: 480px) {
+		@include padding(50px null);
+	}
+
+	@media only screen and (min-width: 768px) {
+		@include padding(70px null);
+	}
+}
