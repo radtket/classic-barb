@@ -1,7 +1,7 @@
-import $ from 'jquery';
+import $ from "jquery";
 // Particle effect for trees to resemble Stranger Things forest view
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
 
 // Setting up the array for trees
 const treeArray = [];
@@ -10,7 +10,7 @@ const dustArray = [];
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
 });
@@ -52,23 +52,38 @@ const drawTree = treeObject => {
     treeObject.positionX + treeObject.width,
     2
   );
-  baseGradient.addColorStop(0.5, 'hsl(204, 80%, 10%)');
-  baseGradient.addColorStop(0.9, 'hsl(204, 95%, 15%)');
-  baseGradient.addColorStop(1, 'hsl(204, 90%, 12.5%)');
+  baseGradient.addColorStop(0.5, "hsl(204, 80%, 10%)");
+  baseGradient.addColorStop(0.9, "hsl(204, 95%, 15%)");
+  baseGradient.addColorStop(1, "hsl(204, 90%, 12.5%)");
 
   // Check for the inverse and get the absolute value so thinner trees have less saturation
   const depthOverlay = Math.abs(treeObject.width / 100 - 1).toFixed(2);
-  treeObject.height = parseInt(canvas.height * (treeObject.width / 100) + canvas.height * 0.6);
+  treeObject.height = parseInt(
+    canvas.height * (treeObject.width / 100) + canvas.height * 0.6
+  );
 
   // Bottom shadow of tree
   const overlayGradient = context.createLinearGradient(0, canvas.height, 0, 20);
-  overlayGradient.addColorStop(0.2, 'hsla(204, 80%, 15%, 1)');
-  overlayGradient.addColorStop(0.9, `hsla(204, 10%, ${30 * depthOverlay}%, ${depthOverlay})`);
+  overlayGradient.addColorStop(0.2, "hsla(204, 80%, 15%, 1)");
+  overlayGradient.addColorStop(
+    0.9,
+    `hsla(204, 10%, ${30 * depthOverlay}%, ${depthOverlay})`
+  );
 
   context.fillStyle = baseGradient;
-  context.fillRect(treeObject.positionX, 0, treeObject.width, treeObject.height);
+  context.fillRect(
+    treeObject.positionX,
+    0,
+    treeObject.width,
+    treeObject.height
+  );
   context.fillStyle = overlayGradient;
-  context.fillRect(treeObject.positionX, 0, treeObject.width, treeObject.height);
+  context.fillRect(
+    treeObject.positionX,
+    0,
+    treeObject.width,
+    treeObject.height
+  );
 
   context.closePath();
   moveTree(treeObject);
@@ -80,10 +95,16 @@ const drawDust = dustObject => {
   moveDust(dustObject);
 
   context.beginPath();
-  context.arc(dustObject.positionX, dustObject.positionY, dustObject.width, 0, 2 * Math.PI);
+  context.arc(
+    dustObject.positionX,
+    dustObject.positionY,
+    dustObject.width,
+    0,
+    2 * Math.PI
+  );
   context.fillStyle = `rgba(255, 255, 255, ${dustObject.opacity})`;
   context.shadowBlur = 10;
-  context.shadowColor = 'white';
+  context.shadowColor = "white";
   context.fill();
 
   context.closePath();
@@ -101,11 +122,12 @@ const moveDust = dustObject => {
   dustObject.positionX += parseInt((dustObject.width / 4) * 3 + 1);
   dustObject.positionY += -1;
 
-  if (dustObject.positionX > canvas.width) dustObject.positionX = 0 - dustObject.width;
-  if (0 > dustObject.positionY) {
+  if (dustObject.positionX > canvas.width)
+    dustObject.positionX = 0 - dustObject.width;
+  if (dustObject.positionY < 0) {
     dustObject.positionY = canvas.height - dustObject.width;
     dustObject.opacity = 0;
-  } else if (0 < dustObject.positionY && 1.0 > dustObject.opacity) {
+  } else if (dustObject.positionY > 0 && dustObject.opacity < 1.0) {
     dustObject.opacity += 0.005;
   }
 };
@@ -114,7 +136,7 @@ const drawStage = () => {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   for (let i = 0, n = dustArray.length, m = 0; i < n; i += 1) {
-    if (0 === i % 6) {
+    if (i % 6 === 0) {
       drawTree(treeArray[m]);
       m += 1;
     }

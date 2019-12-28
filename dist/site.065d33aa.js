@@ -10584,32 +10584,15 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{"process":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"js/site.js":[function(require,module,exports) {
+},{"process":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"js/components/Tree.js":[function(require,module,exports) {
 "use strict";
 
-var _jquery = _interopRequireDefault(require("jquery"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/* eslint-env jquery */
-// Particle effect for trees to resemble Stranger Things forest view
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d'); // Setting up the array for trees
-
-var treeArray = [];
-var dustArray = [];
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-window.addEventListener('resize', function () {
-  canvas.height = window.innerHeight;
-  canvas.width = window.innerWidth;
-});
 
 var Tree = function Tree() {
   _classCallCheck(this, Tree);
@@ -10619,6 +10602,18 @@ var Tree = function Tree() {
   this.positionX = parseInt(Math.random() * canvas.width - 200 + 200);
 };
 
+var _default = Tree;
+exports.default = _default;
+},{}],"js/components/Dust.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var Dust = function Dust() {
   _classCallCheck(this, Dust);
 
@@ -10627,6 +10622,39 @@ var Dust = function Dust() {
   this.positionY = parseInt(Math.random() * canvas.height * 0.7);
   this.opacity = 0;
 };
+
+var _default = Dust;
+exports.default = _default;
+},{}],"js/site.js":[function(require,module,exports) {
+"use strict";
+
+var _jquery = _interopRequireDefault(require("jquery"));
+
+var _Tree = _interopRequireDefault(require("./components/Tree"));
+
+var _Dust = _interopRequireDefault(require("./components/Dust"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/* eslint-env jquery */
+// Particle effect for trees to resemble Stranger Things forest view
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d"); // Setting up the array for trees
+
+var treeArray = [];
+var dustArray = [];
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener("resize", function () {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+});
 
 var createObject = function createObject(objectArray, ParticleObject, particleMax) {
   for (var i = 0; i < particleMax; i += 1) {
@@ -10644,15 +10672,15 @@ var drawTree = function drawTree(treeObject) {
   context.beginPath(); // Base color for the trunk
 
   var baseGradient = context.createLinearGradient(treeObject.positionX, 0, treeObject.positionX + treeObject.width, 2);
-  baseGradient.addColorStop(0.5, 'hsl(204, 80%, 10%)');
-  baseGradient.addColorStop(0.9, 'hsl(204, 95%, 15%)');
-  baseGradient.addColorStop(1, 'hsl(204, 90%, 12.5%)'); // Check for the inverse and get the absolute value so thinner trees have less saturation
+  baseGradient.addColorStop(0.5, "hsl(204, 80%, 10%)");
+  baseGradient.addColorStop(0.9, "hsl(204, 95%, 15%)");
+  baseGradient.addColorStop(1, "hsl(204, 90%, 12.5%)"); // Check for the inverse and get the absolute value so thinner trees have less saturation
 
   var depthOverlay = Math.abs(treeObject.width / 100 - 1).toFixed(2);
   treeObject.height = parseInt(canvas.height * (treeObject.width / 100) + canvas.height * 0.6); // Bottom shadow of tree
 
   var overlayGradient = context.createLinearGradient(0, canvas.height, 0, 20);
-  overlayGradient.addColorStop(0.2, 'hsla(204, 80%, 15%, 1)');
+  overlayGradient.addColorStop(0.2, "hsla(204, 80%, 15%, 1)");
   overlayGradient.addColorStop(0.9, "hsla(204, 10%, ".concat(30 * depthOverlay, "%, ").concat(depthOverlay, ")"));
   context.fillStyle = baseGradient;
   context.fillRect(treeObject.positionX, 0, treeObject.width, treeObject.height);
@@ -10670,7 +10698,7 @@ var drawDust = function drawDust(dustObject) {
   context.arc(dustObject.positionX, dustObject.positionY, dustObject.width, 0, 2 * Math.PI);
   context.fillStyle = "rgba(255, 255, 255, ".concat(dustObject.opacity, ")");
   context.shadowBlur = 10;
-  context.shadowColor = 'white';
+  context.shadowColor = "white";
   context.fill();
   context.closePath();
   context.restore();
@@ -10689,10 +10717,10 @@ var moveDust = function moveDust(dustObject) {
   dustObject.positionY += -1;
   if (dustObject.positionX > canvas.width) dustObject.positionX = 0 - dustObject.width;
 
-  if (0 > dustObject.positionY) {
+  if (dustObject.positionY < 0) {
     dustObject.positionY = canvas.height - dustObject.width;
     dustObject.opacity = 0;
-  } else if (0 < dustObject.positionY && 1.0 > dustObject.opacity) {
+  } else if (dustObject.positionY > 0 && dustObject.opacity < 1.0) {
     dustObject.opacity += 0.005;
   }
 };
@@ -10701,7 +10729,7 @@ var drawStage = function drawStage() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   for (var i = 0, n = dustArray.length, m = 0; i < n; i++) {
-    if (0 == i % 6) {
+    if (i % 6 == 0) {
       drawTree(treeArray[m]);
       m++;
     }
@@ -10717,43 +10745,43 @@ var drawStage = function drawStage() {
 
 
 var BulbElement = 1;
-var BulbDefaultColor = '#A3A2A2';
+var BulbDefaultColor = "#A3A2A2";
 var interval;
 var index = 0;
 var selectedText = [];
 var timeout;
 var BulbColor = {
-  A: '#ffeb04',
-  B: '#e60227',
-  C: '#05a2f1',
-  D: '#70b21d',
-  E: '#ad0073',
-  F: '#00a131',
-  G: '#f5a300',
-  H: '#e75000',
-  I: '#0082ce',
-  J: '#1C48AB',
-  K: '#5C87AA',
-  L: '#E7FFFF',
-  M: '#EECA42',
-  N: '#34CECE',
-  O: '#B7078E',
-  P: '#C9E3E2',
-  Q: '#D3499F',
-  R: '#ECECEA',
-  S: '#E9A321',
-  T: '#F7BF12',
-  U: '#2CA5D0',
-  V: '#C0467F',
-  W: '#0394CB',
-  X: '#FBBD2E',
-  Y: '#E68FD6',
-  Z: '#73BEA9'
+  A: "#ffeb04",
+  B: "#e60227",
+  C: "#05a2f1",
+  D: "#70b21d",
+  E: "#ad0073",
+  F: "#00a131",
+  G: "#f5a300",
+  H: "#e75000",
+  I: "#0082ce",
+  J: "#1C48AB",
+  K: "#5C87AA",
+  L: "#E7FFFF",
+  M: "#EECA42",
+  N: "#34CECE",
+  O: "#B7078E",
+  P: "#C9E3E2",
+  Q: "#D3499F",
+  R: "#ECECEA",
+  S: "#E9A321",
+  T: "#F7BF12",
+  U: "#2CA5D0",
+  V: "#C0467F",
+  W: "#0394CB",
+  X: "#FBBD2E",
+  Y: "#E68FD6",
+  Z: "#73BEA9"
 };
 
 function reset() {
-  (0, _jquery.default)('#go_for_it')[0].disabled = false;
-  (0, _jquery.default)('#go_for_it').removeClass('send-it');
+  (0, _jquery.default)("#go_for_it")[0].disabled = false;
+  (0, _jquery.default)("#go_for_it").removeClass("send-it");
   selectedText = [];
   index = 0;
   clearInterval(interval);
@@ -10778,11 +10806,11 @@ function showLetters() {
 }
 
 function setTextReady() {
-  selectedText = (0, _jquery.default)('#i_text').val().split('');
+  selectedText = (0, _jquery.default)("#i_text").val().split("");
 
-  if (!(0, _jquery.default)('#go_for_it').selected && 0 < selectedText.length) {
+  if (!(0, _jquery.default)("#go_for_it").selected && selectedText.length > 0) {
     interval = setInterval(showLetters, 1000);
-    (0, _jquery.default)('#go_for_it')[0].disabled = true;
+    (0, _jquery.default)("#go_for_it")[0].disabled = true;
   }
 } // Sparkles
 
@@ -10790,19 +10818,19 @@ function setTextReady() {
 function inputAnimation() {
   var _this = this;
 
-  (0, _jquery.default)('#i_text').focus(function () {
-    (0, _jquery.default)(this).parent().addClass('is-focus');
+  (0, _jquery.default)("#i_text").focus(function () {
+    (0, _jquery.default)(this).parent().addClass("is-focus");
   }).blur(function () {
-    (0, _jquery.default)(this).parent().removeClass('is-focus');
+    (0, _jquery.default)(this).parent().removeClass("is-focus");
   });
-  (0, _jquery.default)('#i_text').on('blur', function () {
-    (0, _jquery.default)(_this).parent().removeClass('is-focus is-type');
+  (0, _jquery.default)("#i_text").on("blur", function () {
+    (0, _jquery.default)(_this).parent().removeClass("is-focus is-type");
   });
-  (0, _jquery.default)('#i_text').on('keydown', function (event) {
-    (0, _jquery.default)(this).parent().addClass('is-type');
+  (0, _jquery.default)("#i_text").on("keydown", function (event) {
+    (0, _jquery.default)(this).parent().addClass("is-type");
 
-    if (8 === event.which && '' === (0, _jquery.default)(this).val()) {
-      (0, _jquery.default)(this).parent().removeClass('is-type');
+    if (event.which === 8 && (0, _jquery.default)(this).val() === "") {
+      (0, _jquery.default)(this).parent().removeClass("is-type");
     }
   });
 } // Paralax
@@ -10810,11 +10838,11 @@ function inputAnimation() {
 
 function parallaxScroll() {
   var scrolled = (0, _jquery.default)(window).scrollTop();
-  console.log('run');
-  (0, _jquery.default)('#parallax-lvl-0').css('top', "".concat(0 - scrolled * 0.25, "px"));
-  (0, _jquery.default)('#parallax-lvl-1').css('top', "".concat(0 - scrolled * 0.5, "px"));
-  (0, _jquery.default)('#parallax-lvl-2').css('top', "".concat(0 - scrolled * 0.75, "px"));
-  (0, _jquery.default)('#parallax-lvl-3').css('top', "".concat(0 - scrolled * 0.9, "px"));
+  console.log("run");
+  (0, _jquery.default)("#parallax-lvl-0").css("top", "".concat(0 - scrolled * 0.25, "px"));
+  (0, _jquery.default)("#parallax-lvl-1").css("top", "".concat(0 - scrolled * 0.5, "px"));
+  (0, _jquery.default)("#parallax-lvl-2").css("top", "".concat(0 - scrolled * 0.75, "px"));
+  (0, _jquery.default)("#parallax-lvl-3").css("top", "".concat(0 - scrolled * 0.9, "px"));
 }
 /* ---------------------------------------------
 		Height 100%
@@ -10823,32 +10851,32 @@ function parallaxScroll() {
 
 function jsHeightInit() {
   (function ($) {
-    $('.js-height-full').height($(window).height());
-    $('.js-height-parent').each(function () {
+    $(".js-height-full").height($(window).height());
+    $(".js-height-parent").each(function () {
       $(this).height($(this).parent().first().height());
     });
   })(jQuery);
 }
 
 (0, _jquery.default)(document).ready(function () {
-  (0, _jquery.default)(window).trigger('resize');
-  (0, _jquery.default)('#go_for_it').on('click', setTextReady);
-  (0, _jquery.default)('#go_for_it').on('click', function () {
-    (0, _jquery.default)(this).addClass('send-it');
+  (0, _jquery.default)(window).trigger("resize");
+  (0, _jquery.default)("#go_for_it").on("click", setTextReady);
+  (0, _jquery.default)("#go_for_it").on("click", function () {
+    (0, _jquery.default)(this).addClass("send-it");
     setTimeout(function () {
-      (0, _jquery.default)('#go_for_it').removeClass('send-it');
+      (0, _jquery.default)("#go_for_it").removeClass("send-it");
     }, 1000);
   });
   inputAnimation();
-  createObject(treeArray, Tree, 15);
-  createObject(dustArray, Dust, 90);
+  createObject(treeArray, _Tree.default, 15);
+  createObject(dustArray, _Dust.default, 90);
   drawStage();
 });
 (0, _jquery.default)(window).resize(function () {
   jsHeightInit();
 });
-(0, _jquery.default)(window).on('scroll', function () {
-  console.log('run');
+(0, _jquery.default)(window).on("scroll", function () {
+  console.log("run");
   parallaxScroll();
 });
 console.clear();
@@ -10873,17 +10901,17 @@ function () {
      */
 
     this.canvas = el;
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext("2d");
     this.ctx.scale(this.patternScaleX, this.patternScaleY);
     /**
      * Create a canvas that will be used to generate grain and used as a
      * pattern on the main canvas.
      */
 
-    this.patternCanvas = document.createElement('canvas');
+    this.patternCanvas = document.createElement("canvas");
     this.patternCanvas.width = this.patternSize;
     this.patternCanvas.height = this.patternSize;
-    this.patternCtx = this.patternCanvas.getContext('2d');
+    this.patternCtx = this.patternCanvas.getContext("2d");
     this.patternData = this.patternCtx.createImageData(this.patternSize, this.patternSize);
     this.patternPixelDataLength = this.patternSize * this.patternSize * 4; // rgba = 4
 
@@ -10894,7 +10922,7 @@ function () {
     this.resize = this.resize.bind(this);
     this.loop = this.loop.bind(this);
     this.frame = 0;
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
     this.resize();
     window.requestAnimationFrame(this.loop);
   }
@@ -10936,14 +10964,14 @@ function () {
 
       ctx.clearRect(0, 0, width, height); // fill the canvas using the pattern
 
-      ctx.fillStyle = ctx.createPattern(patternCanvas, 'repeat');
+      ctx.fillStyle = ctx.createPattern(patternCanvas, "repeat");
       ctx.fillRect(0, 0, width, height);
     }
   }, {
     key: "loop",
     value: function loop() {
       // only update grain every n frames
-      var shouldDraw = 0 === ++this.frame % this.patternRefreshInterval;
+      var shouldDraw = ++this.frame % this.patternRefreshInterval === 0;
 
       if (shouldDraw) {
         this.update();
@@ -10961,15 +10989,15 @@ function () {
  */
 
 
-var el = document.querySelector('.grain');
+var el = document.querySelector(".grain");
 var grain = new Grain(el);
 (function () {
   var i;
   var NUM_CONFETTI = 350;
   var COLORS = [[85, 71, 106], [174, 61, 99], [219, 56, 83], [244, 92, 68], [248, 182, 70]];
   var PI_2 = 2 * Math.PI;
-  var canvas = document.getElementById('world');
-  var context = canvas.getContext('2d');
+  var canvas = document.getElementById("world");
+  var context = canvas.getContext("2d");
   window.w = 0;
   window.h = 0;
 
@@ -10978,7 +11006,7 @@ var grain = new Grain(el);
     return window.h = canvas.height = window.innerHeight;
   };
 
-  window.addEventListener('resize', resizeWindow, false);
+  window.addEventListener("resize", resizeWindow, false);
 
   window.onload = function () {
     return setTimeout(resizeWindow, 0);
@@ -11033,16 +11061,16 @@ var grain = new Grain(el);
       this.y += this.vy;
       this.opacity += this.dop;
 
-      if (1 < this.opacity) {
+      if (this.opacity > 1) {
         this.opacity = 1;
         this.dop *= -1;
       }
 
-      if (0 > this.opacity || this.y > this.ymax) {
+      if (this.opacity < 0 || this.y > this.ymax) {
         this.replace();
       }
 
-      if (!(0 < (ref = this.x) && ref < this.xmax)) {
+      if (!((ref = this.x) > 0 && ref < this.xmax)) {
         this.x = (this.x + this.xmax) % this.xmax;
       }
 
@@ -11057,7 +11085,7 @@ var grain = new Grain(el);
     var ref;
     var results = [];
 
-    for (i = j = 1, ref = NUM_CONFETTI; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+    for (i = j = 1, ref = NUM_CONFETTI; ref >= 1 ? j <= ref : j >= ref; i = ref >= 1 ? ++j : --j) {
       results.push(new Confetti());
     }
 
@@ -11082,7 +11110,7 @@ var grain = new Grain(el);
 
   step();
 }).call(void 0);
-},{"jquery":"../node_modules/jquery/dist/jquery.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"jquery":"../node_modules/jquery/dist/jquery.js","./components/Tree":"js/components/Tree.js","./components/Dust":"js/components/Dust.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -11110,7 +11138,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51377" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54624" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
