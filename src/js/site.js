@@ -1,4 +1,5 @@
-import $ from "jquery";
+import jQuery from "jquery";
+const $ = jQuery
 import Tree from "./components/Tree";
 import Dust from "./components/Dust";
 /* eslint-env jquery */
@@ -248,7 +249,6 @@ function inputAnimation() {
 // Paralax
 function parallaxScroll() {
   const scrolled = $(window).scrollTop();
-  console.log("run");
   $("#parallax-lvl-0").css("top", `${0 - scrolled * 0.25}px`);
   $("#parallax-lvl-1").css("top", `${0 - scrolled * 0.5}px`);
   $("#parallax-lvl-2").css("top", `${0 - scrolled * 0.75}px`);
@@ -275,7 +275,8 @@ function jsHeightInit() {
 $(document).ready(() => {
   $(window).trigger("resize");
   $("#go_for_it").on("click", setTextReady);
-  $("#go_for_it").on("click", function() {
+  $("#go_for_it").on("click", function(e) {
+    e.preventDefault()
     $(this).addClass("send-it");
 
     setTimeout(() => {

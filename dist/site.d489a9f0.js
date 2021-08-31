@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -144,12 +144,12 @@ function getBundleURL() {
 }
 
 function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
 }
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,12 +184,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"sass/site.scss":[function(require,module,exports) {
+},{"./bundle-url":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"sass/site.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../img/Layer_1.png":[["Layer_1.4449dca4.png","img/Layer_1.png"],"img/Layer_1.png"],"./../img/Layer_2.png":[["Layer_2.3debaaca.png","img/Layer_2.png"],"img/Layer_2.png"],"./../img/Layer_3.png":[["Layer_3.a11ff465.png","img/Layer_3.png"],"img/Layer_3.png"],"./../img/Layer_4.png":[["Layer_4.aaef838a.png","img/Layer_4.png"],"img/Layer_4.png"],"./../img/Layer_5.png":[["Layer_5.b7e22bec.png","img/Layer_5.png"],"img/Layer_5.png"],"./../img/Layer_6.png":[["Layer_6.7c3873e4.png","img/Layer_6.png"],"img/Layer_6.png"],"./../img/Layer_7.png":[["Layer_7.67339f84.png","img/Layer_7.png"],"img/Layer_7.png"],"./../img/Layer_8.png":[["Layer_8.8c456177.png","img/Layer_8.png"],"img/Layer_8.png"],"./../img/Layer_9.png":[["Layer_9.6d754e24.png","img/Layer_9.png"],"img/Layer_9.png"],"./../img/Layer_10.png":[["Layer_10.02cef20b.png","img/Layer_10.png"],"img/Layer_10.png"],"./../img/Layer_11.png":[["Layer_11.b3e9cbcc.png","img/Layer_11.png"],"img/Layer_11.png"],"./../img/Layer_12.png":[["Layer_12.b588db98.png","img/Layer_12.png"],"img/Layer_12.png"],"./../img/et.jpg":[["et.e5c09a25.jpg","img/et.jpg"],"img/et.jpg"],"_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./../img/Layer_1.png":[["Layer_1.4449dca4.png","img/Layer_1.png"],"img/Layer_1.png"],"./../img/Layer_2.png":[["Layer_2.3debaaca.png","img/Layer_2.png"],"img/Layer_2.png"],"./../img/Layer_3.png":[["Layer_3.a11ff465.png","img/Layer_3.png"],"img/Layer_3.png"],"./../img/Layer_4.png":[["Layer_4.aaef838a.png","img/Layer_4.png"],"img/Layer_4.png"],"./../img/Layer_5.png":[["Layer_5.b7e22bec.png","img/Layer_5.png"],"img/Layer_5.png"],"./../img/Layer_6.png":[["Layer_6.7c3873e4.png","img/Layer_6.png"],"img/Layer_6.png"],"./../img/Layer_7.png":[["Layer_7.67339f84.png","img/Layer_7.png"],"img/Layer_7.png"],"./../img/Layer_8.png":[["Layer_8.8c456177.png","img/Layer_8.png"],"img/Layer_8.png"],"./../img/Layer_9.png":[["Layer_9.6d754e24.png","img/Layer_9.png"],"img/Layer_9.png"],"./../img/Layer_10.png":[["Layer_10.02cef20b.png","img/Layer_10.png"],"img/Layer_10.png"],"./../img/Layer_11.png":[["Layer_11.b3e9cbcc.png","img/Layer_11.png"],"img/Layer_11.png"],"./../img/Layer_12.png":[["Layer_12.b588db98.png","img/Layer_12.png"],"img/Layer_12.png"],"./../img/et.jpg":[["et.e5c09a25.jpg","img/et.jpg"],"img/et.jpg"],"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54624" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57376" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -393,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+},{}]},{},["../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
 //# sourceMappingURL=/site.d489a9f0.js.map
